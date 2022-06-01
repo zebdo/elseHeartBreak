@@ -1,10 +1,12 @@
 ### ZOS V.1.0
+### https://github.com/zebdo/elseHeartBreak/
 ### https://zebdo.net/
-var conn = Connect('Hotel_Office_RecorderComputerWithMonitor_1')
 
+#useful connections
+var hotel_server = Connect('Hotel_Office_RecorderComputerWithMonitor_1')
 Banner()
-SaveMemory('sesh','sesh')
-LoadMemory('sesh')
+Print(LoadMemory('cmc1'))
+array cns #slaves
 loop
     string cmd = Input(GetHour()+':'+GetMinute()+"> ")
     
@@ -14,11 +16,16 @@ loop
         ClearText()
     else if cmd == 'info' or cmd == 'i'
         Info()
+    else if hotel_server.StringContains(cmd,'cm')
+        if cmd == 'cm help'
+            cmHelp()
+        end
+    else if cmd == 'slurp'
+        Slurp()
     else
         Print('Unknown command "' + cmd  + '"!')
     end
 end
-
 
 #FUNCTIONS
 
@@ -32,9 +39,34 @@ void Banner()
     Print('Time: ' + Time())
     Print('Hostname: ' + Name()) 
 end
-
 void help()
     Print('List of commands:')
+    Print('slurp - leak into cyberspace')
     Print('info - prints system info')
+    Print('connman - connection management')
     Print('clear - clears terminal')
+end
+##connman functions
+void cmHelp()
+    Print('====connman help====')
+    Print('all cm commands need')
+    Print('"cm" preceding them')
+    Print('ing | eg: cm connect')
+    Print('====================')
+    Print('-save - save to HD') 
+end
+void cmSave(string name)
+    number i = 0
+    loop
+        if HasMemory('cmc'+i)
+            i++
+        else
+           SaveMemory('cmc'+i,name)
+           break 
+        end
+    end
+end
+void cmSlave(string name)
+    Connect(name)
+    cmSave(name)
 end
