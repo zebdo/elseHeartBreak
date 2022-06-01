@@ -1,0 +1,40 @@
+### ZOS V.1.0
+### https://zebdo.net/
+var conn = Connect('Hotel_Office_RecorderComputerWithMonitor_1')
+
+Banner()
+SaveMemory('sesh','sesh')
+LoadMemory('sesh')
+loop
+    string cmd = Input(GetHour()+':'+GetMinute()+"> ")
+    
+    if cmd == "help" or cmd == "h"
+        help()
+    else if cmd == 'clear' or cmd == 'c'
+        ClearText()
+    else if cmd == 'info' or cmd == 'i'
+        Info()
+    else
+        Print('Unknown command "' + cmd  + '"!')
+    end
+end
+
+
+#FUNCTIONS
+
+void Banner()
+    ClearText()
+    Color(0,0,0)
+    Rect(0,0,Width(),Height())
+    DisplayGraphics()
+    Print('ZOS')
+    Print('V 1.0')
+    Print('Time: ' + Time())
+    Print('Hostname: ' + Name()) 
+end
+
+void help()
+    Print('List of commands:')
+    Print('info - prints system info')
+    Print('clear - clears terminal')
+end
